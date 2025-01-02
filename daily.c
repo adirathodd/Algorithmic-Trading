@@ -13,7 +13,6 @@ Dataframe *dataframes[MAX_FILES];
 char *filepaths[MAX_FILES];
 int file_count = 0;
 
-// Function to compare 2 rows for qsort
 int compareRows(const void *a, const void *b) {
     const Row *ra = *(const Row **)a;
     const Row *rb = *(const Row **)b;

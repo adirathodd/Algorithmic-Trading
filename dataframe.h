@@ -1,35 +1,44 @@
 #ifndef DATAFRAME_H
 #define DATAFRAME_H
+
+#include <iostream>
+#include <vector>
+#include <string>
+
 #define MAX_FIELD_SIZE 256
 
-#include <stdio.h>
-#include <stdlib.h>
+using namespace std;
 
-typedef struct Row {
-    char date[20];
-    char ticker[10];
-    float open;
-    float high;
-    float low;
-    float close;
-    int volume;
-    int openInt;
-    float movAvg7;
-    float movAvg30;
-} Row;
+struct Row {
+    string date;
+    string ticker;
+    float open = 0.0f;
+    float high = 0.0f;
+    float low = 0.0f;
+    float close = 0.0f;
+    int volume = 0;
+    int openInt = 0;
+    float movAvg7 = 0.0f;
+    float movAvg30 = 0.0f;
+};
 
-
-typedef struct {
-    char *columns[10];
-    Row **rows;
+class DataFrame {
+private:
+    vector<string> columns;
+    vector<Row> rows;
     int numCols;
     int numRows;
-} Dataframe;
+    char delim;
+    void trimWhitespace(string &line);
+    int countRows(const string &filepath);
+    void printRow(const Row &row);
 
-Dataframe* readCSV(const char* filename);
-Dataframe *createDataframe(int rows, int cols);
-void freeDataframe(Dataframe *df);
-void printDataframe(Dataframe *df);
-void printHead(Dataframe *df);
+public:
+    DataFrame();
+    void readCSV(const string &filename);
+    void printHead(int n = 10);
+    void printDataFrame();
+    ~DataFrame();
+};
 
 #endif
