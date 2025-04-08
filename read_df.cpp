@@ -48,6 +48,8 @@ int main(int argc, char *argv[]){
 
     nthreads = atoi(argv[2]);
 
+    cout << "1. Reading filepaths in the folder. " << endl;
+
     // get all the filepaths from the given folder
     vector<string> filepaths;
     DIR *dirp = opendir(argv[1]);
@@ -62,6 +64,10 @@ int main(int argc, char *argv[]){
     }
     closedir(dirp);
 
+    cout << "Completed!" << endl;
+
+    cout << "2. Building dataframe with given no. of threads." << endl;
+
     nfiles = filepaths.size();
     df_array = (DataFrame *)malloc(sizeof(DataFrame) * nfiles);
 
@@ -75,6 +81,8 @@ int main(int argc, char *argv[]){
 
     for(int i = 0; i < nthreads; i++) pthread_create(&threads[i], NULL, read_df, &args1[i]);
     for(int i = 0; i < nthreads; i++) pthread_join(threads[i], NULL);
+
+    cout << "Completed!" << endl;
 
     free(df_array);
 
